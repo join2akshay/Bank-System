@@ -362,3 +362,167 @@ void toggle(int,int);
 		}
 		}
 	}
+  void toggle(int i,int temp)
+{
+	char m1[]="1:   SEE ACCOUNT     ",m2[]="2: LIST OF ACCOUNTS",m3[]="3:   TRANSACTIONS    ",
+	     m4[]="4:   OPEN NEW ACCOUNT",m5[]="5: EDIT ACCOUNT	",m6[]="6:   HELP	       ",
+	     m7[]="7:   QUIT            ";
+		if (i==0) i=7;
+		if (temp==0) temp=7;
+		box(temp,7);
+		switch(temp)
+	{
+		case 1: box(1,7);
+			setcolor(15);
+			outtextxy(320,90,m1);
+			break;
+		case 2: box(2,7);
+			setcolor(15);
+			outtextxy(320,150,m2);
+			break;
+		case 3: box(3,7);
+			setcolor(15);
+			outtextxy(320,210,m3);
+			break;
+		case 4: box(4,7);
+			setcolor(15);
+			outtextxy(320,270,m4);
+			break;
+		case 5: box(5,7);
+			setcolor(15);
+			outtextxy(320,330,m5);
+			break;
+		case 6: box(6,7);
+			setcolor(15);
+			outtextxy(320,390,m6);
+			break;
+		case 7: box(7,7);
+			setcolor(15);
+			outtextxy(320,450,m7);
+			break;
+	}
+
+	switch(i)
+	{
+		case 1: box(1,9);
+			setcolor(1);
+			outtextxy(320,90,m1);
+			break;
+		case 2: box(2,9);
+			setcolor(1);
+			outtextxy(320,150,m2);
+			break;
+		case 3: box(3,9);
+			setcolor(1);
+			outtextxy(320,210,m3);
+			break;
+		case 4: box(4,9);
+			setcolor(1);
+			outtextxy(320,270,m4);
+			break;
+		case 5: box(5,9);
+			setcolor(1);
+			outtextxy(320,330,m5);
+			break;
+		case 6: box(6,9);
+			setcolor(1);
+			outtextxy(320,390,m6);
+			break;
+		case 7: box(7,9);
+			setcolor(1);
+			outtextxy(320,450,m7);
+			break;
+	}
+}
+void selected(int i)
+{
+     if(i==0) i=7;
+	delay(350);
+	setcolor(0);
+		line(180,60*(i+.5)-20,180,60*(i+.5)+20);
+		line(180,60*(i+.5)-20,460,60*(i+.5)-20);
+	setcolor(15);
+		line(460,60*(i+.5)-20,460,60*(i+.5)+20);
+		line(180,60*(i+.5)+20,460,60*(i+.5)+20);
+		line(461,60*(i+.5)-20,461,60*(i+.5)+21);
+		line(180,60*(i+.5)+21,461,60*(i+.5)+21);
+	delay(350);
+	setcolor(15);
+		line(180,60*(i+.5)-20,180,60*(i+.5)+20);
+		line(180,60*(i+.5)-20,460,60*(i+.5)-20);
+	setcolor(0);
+		line(460,60*(i+.5)-20,460,60*(i+.5)+20);
+		line(180,60*(i+.5)+20,460,60*(i+.5)+20);
+		line(461,60*(i+.5)-20,461,60*(i+.5)+21);
+		line(180,60*(i+.5)+21,461,60*(i+.5)+21);
+}
+void box(int i,int color)
+{
+	setcolor(5);
+		line(180,60*(i+.5)-20,180,60*(i+.5)+20);
+		line(180,60*(i+.5)-20,460,60*(i+.5)-20);
+		line(460,60*(i+.5)-20,460,60*(i+.5)+20);
+		line(180,60*(i+.5)+20,460,60*(i+.5)+20);
+	setfillstyle(1,color);
+	floodfill(320,60*(i+.5),5);
+	setcolor(15);
+		line(180,60*(i+.5)-20,180,60*(i+.5)+20);
+		line(180,60*(i+.5)-20,460,60*(i+.5)-20);
+	setcolor(0);
+		line(460,60*(i+.5)-20,460,60*(i+.5)+20);
+		line(180,60*(i+.5)+20,460,60*(i+.5)+20);
+		line(461,60*(i+.5)-20,461,60*(i+.5)+21);
+		line(180,60*(i+.5)+21,461,60*(i+.5)+21);
+}
+
+//************************************************************************
+
+// CLASS CONTROL :: FUNCTION TO DISPLAY EDIT MENU AND CALL OTHER FUNCTIONS
+//************************************************************************
+
+
+void control :: edit_menu(void)
+{
+	char ch ;
+	while (1)
+	{
+		clrscr() ;
+		shape s ;
+		s.box(10,5,71,21,219) ;
+		s.box(9,4,72,22,218) ;
+		textcolor(BLACK) ;
+		textbackground(WHITE) ;
+		gotoxy(34,10) ;
+		cprintf(" EDIT MENU ") ;
+		textcolor(LIGHTGRAY) ;
+		textbackground(BLACK) ;
+		gotoxy(31,12) ;
+		cout <<"1: MODIFY ACCOUNT" ;
+		gotoxy(31,13) ;
+		cout <<"2: CLOSE ACCOUNT" ;
+		gotoxy(31,14) ;
+		cout <<"0: QUIT" ;
+		gotoxy(31,16) ;
+		cout <<"Enter your choice: " ;
+		ch = getche() ;
+		if (ch == 27)
+			break ;
+		else
+		if (ch == '1')
+		{
+			initial ini ;
+			ini.modify() ;
+			break ;
+		}
+		else
+		if (ch == '2')
+		{
+			account a ;
+			a.close_account() ;
+			break ;
+		}
+		else
+		if (ch == '0')
+			break ;
+	}
+}
