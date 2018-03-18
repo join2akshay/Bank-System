@@ -526,3 +526,187 @@ void control :: edit_menu(void)
 			break ;
 	}
 }
+
+
+//**********************************************************
+// CLASS CONTROL :: FUNCTION TO DISPLAY HELP ABOUT PROJECT
+//**********************************************************
+
+void control :: help(void)
+{
+
+	clrscr() ;
+	shape s ;
+	s.box(2,1,79,25,218) ;
+	s.box(25,2,54,4,219) ;
+	textcolor(LIGHTBLUE+BLINK) ;
+	gotoxy(27,3); cprintf("WELCOME TO PROJECT BANKING") ;
+	delay(10) ;
+	textcolor(LIGHTBLUE);
+	gotoxy(10,5);  cout <<"   IN  THIS  PROJECT YOU CAN  KEEP  RECORD FOR  DAILY ";
+	delay(10) ;
+	gotoxy(10,6);  cout <<"\t\tBANKING  TRANSACTIONS. 	     " ;
+	delay(10) ;
+	gotoxy(10,8);  cout <<"-->> THIS PROGRAM IS CAPABLE OF HOLDING ANY No. OF ACCOUNTS";
+	delay(10) ;
+	gotoxy(10,10); cout <<"1 In the first option the account of a particular person";
+	delay(10) ;
+	gotoxy(10,11); cout <<" is displayed by giving simply the account no. of that person." ;
+	delay(10) ;
+	gotoxy(10,13); cout <<"2: In second option you can see the list of all the accounts." ;
+	delay(10) ;
+	gotoxy(10,15); cout <<"3: Through third option you can do banking transactions" ;
+	delay(10) ;
+	gotoxy(10,16); cout <<"  (Deposit/Withdraw)." ;
+	delay(10) ;
+	gotoxy(10,18); cout <<"4: In Fourth option you can open new account." ;
+	delay(10) ;
+	gotoxy(10,19); cout <<"  NOTE: Opening amount i.e., the first deposit should not be " ;
+	delay(10) ;
+	gotoxy(10,20); cout <<" less than Rs.500/-";
+	delay(10);
+	gotoxy(10,22); cout <<"5: In Fifth option you can Modify or Delete any account." ;
+	delay(10) ;
+	gotoxy(10,23); cout <<"6: In sixth option the help menu is displayed ";
+	gotoxy(10,24); cout <<"7: This is the last option i.e., Quit (Exit to Dos).  " ;
+	delay(10) ;
+	textcolor(RED+BLINK) ; textbackground(WHITE+BLINK) ;
+	gotoxy(26,25) ; cprintf(" Press a key to continue ") ;
+	textcolor(LIGHTGRAY) ; textbackground(BLACK) ;
+	gotoxy(25,2) ;
+	getch() ;
+	getch() ;
+	for (int i=25; i>=1; i--)
+	{
+		delay(20) ;
+		gotoxy(1,i) ; clreol() ;
+	}
+
+}
+
+//******************************************************************
+// CLASS INITIAL :: THIS FUNCTION RETURN LAST ACCOUNT NO. IN THE FILE
+//		   INITIAL.DAT
+//******************************************************************
+
+int initial :: last_accno(void)
+{
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	file.seekg(0,ios::beg) ;
+	int count=0 ;
+	while (file.read((char *) this, sizeof(initial)))
+		count = accno ;
+	file.close() ;
+	return count ;
+}
+
+
+//**************************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION RETURN RECORD NO. OF THE GIVEN ACCOUNT NO.
+// 		    IN THE FILE INITIAL.DAT
+//**************************************************************************
+
+
+int initial :: recordno(int t_accno)
+{
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	file.seekg(0,ios::beg) ;
+	int count=0 ;
+	while (file.read((char *) this, sizeof(initial)))
+	{
+		count++ ;
+		if (t_accno == accno)
+			break ;
+	}
+	file.close() ;
+	return count ;
+}
+
+
+//************************************************************************
+
+// CLASS I NITIAL :: THIS FUNCTION DISPLAY THE ACCOUNT FOR GIVEN ACCOUNT NO.
+// 		    FROM THE FILE INITIAL.DAT
+//************************************************************************
+
+
+void initial :: display(int t_accno)
+{
+	shape s ;
+	s.box(8,7,73,11,219) ;
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	file.seekg(0,ios::beg) ;
+	while (file.read((char *) this, sizeof(initial)))
+	{
+		if (t_accno == accno)
+		{
+			gotoxy(8,5) ;
+			cout <<"ACCOUNT NO. " <<accno ;
+			gotoxy(10,8) ;
+			cout <<"Name    : " <<name ;
+			gotoxy(10,9) ;
+			cout <<"Address : " <<address ;
+			gotoxy(10,10) ;
+			cout <<"Balance : " <<balance ;
+			break ;
+		}
+	}
+	file.close() ;
+}
+
+
+//*********************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION RETURN NAME FOR THE GIVEN ACCOUNT NO.
+//		    IN THE FILE INITIAL.DAT
+//*********************************************************************
+
+
+char *initial :: return_name(int t_accno)
+{
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	file.seekg(0,ios::beg) ;
+	char t_name[30] ;
+	while (file.read((char *) this, sizeof(initial)))
+	{
+		if (accno == t_accno)
+		{
+			strcpy(t_name,name) ;
+			break ;
+		}
+	}
+	file.close() ;
+	return t_name ;
+}
+
+
+//************************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION RETURN ADDRESS FOR THE GIVEN ACCOUNT NO.
+//		    IN THE FILE INITIAL.DAT
+//************************************************************************
+
+
+char *initial :: return_address(int t_accno)
+{
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	file.seekg(0,ios::beg) ;
+	char t_address[60] ;
+	while (file.read((char *) this, sizeof(initial)))
+	{
+		if (accno == t_accno)
+		{
+			strcpy(t_address,address) ;
+			break ;
+		}
+	}
+	file.close() ;
+	return t_address ;
+}
+
