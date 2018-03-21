@@ -736,3 +736,28 @@ float initial :: give_balance(int t_accno)
 	return t_balance ;
 }
 
+
+//***********************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION RETURN 1 IF THE GIVEN ACCOUNT NO. FOUND
+// 		    IN THE FILE INITIAL.DAT
+//***********************************************************************
+
+
+int initial :: found_account(int t_accno)
+{
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	file.seekg(0,ios::beg) ;
+	int found=0 ;
+	while (file.read((char *) this, sizeof(initial)))
+	{
+		if (accno == t_accno)
+		{
+			found = 1 ;
+			break ;
+		}
+	}
+	file.close() ;
+	return found ;
+}
