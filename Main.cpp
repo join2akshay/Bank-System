@@ -761,3 +761,36 @@ int initial :: found_account(int t_accno)
 	file.close() ;
 	return found ;
 }
+
+
+//**********************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION DRAWS THE BOX FOR THE LIST OF ACCOUNTS
+//**********************************************************************
+
+
+void initial :: box_for_list()
+{
+	shape s ;
+	s.box(2,1,79,25,218) ;
+	s.line_hor(3,78,3,196) ;
+	s.line_hor(3,78,5,196) ;
+	s.line_hor(3,78,23,196) ;
+	textbackground(WHITE) ;
+	gotoxy(3,4) ;
+	for (int i=1; i<=76; i++) cprintf(" ") ;
+	textbackground(BLACK) ;
+	textcolor(BLACK) ; textbackground(WHITE) ;
+	gotoxy(4,4) ;
+	cprintf("ACCOUNT NO.	     NAME OF PERSON                    BALANCE") ;
+	textcolor(LIGHTGRAY) ; textbackground(BLACK) ;
+	int d1, m1, y1 ;
+	struct date d;
+	getdate(&d);
+	d1 = d.da_day ;
+	m1 = d.da_mon ;
+	y1 = d.da_year ;
+	gotoxy(4,2) ;
+	cout <<"Date: " <<d1 <<"/" <<m1 <<"/" <<y1 ;
+}
+
