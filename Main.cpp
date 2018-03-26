@@ -794,3 +794,54 @@ void initial :: box_for_list()
 	cout <<"Date: " <<d1 <<"/" <<m1 <<"/" <<y1 ;
 }
 
+
+//**********************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION DISPLAYS THE LIST OF ACCOUNTS IN FILE
+// 		    INITIAL.DAT
+//**********************************************************************
+
+
+void initial :: display_list(void)
+{
+	clrscr() ;
+	box_for_list() ;
+	int row=6, flag ;
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	while (file.read((char *) this, sizeof(initial)))
+	{
+		flag = 0 ;
+		delay(10) ;
+		gotoxy(7,row) ;
+		cout <<accno ;
+		gotoxy(25,row) ;
+		cout <<name ;
+		gotoxy(57,row) ;
+		cout <<balance ;
+		row++ ;
+		if (row == 23)
+		{
+			flag = 1 ;
+			row = 6 ;
+			gotoxy(4,24) ;
+			cout <<"Press any key to continue..." ;
+			getch() ;
+			clrscr() ;
+			box_for_list() ;
+		}
+	}
+	file.close() ;
+	if (!flag)
+	{
+		gotoxy(4,24) ;
+		cout <<"Press any key to continue..." ;
+		getch() ;
+	}
+}
+
+
+//*****************************************************************
+// CLASS INITIAL :: THIS FUNCTION ADDS THE GIVEN DATA INTO THE FILE
+//		    INITIAL.DAT
+//*****************************************************************
