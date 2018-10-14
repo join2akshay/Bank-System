@@ -845,3 +845,59 @@ void initial :: display_list(void)
 // CLASS INITIAL :: THIS FUNCTION ADDS THE GIVEN DATA INTO THE FILE
 //		    INITIAL.DAT
 //*****************************************************************
+
+
+
+void initial :: add_to_file(int t_accno, char t_name[30], char
+t_address[60], float t_balance)
+{
+	accno = t_accno ;
+	strcpy(name,t_name) ;
+	strcpy(address,t_address) ;
+	balance = t_balance ;
+	fstream file ;
+	file.open("INITIAL.DAT", ios::out | ios::app|ios::binary) ;
+	file.write((char *) this, sizeof(initial)) ;
+	file.close() ;
+}
+
+
+//***********************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION DELETES RECORD FOR THE GIVEN ACOUNT NO.
+// 		    FROM THE FILE INITIAL.DAT
+//***********************************************************************
+
+
+void initial :: delete_account(int t_accno)
+{
+	fstream file ;
+	file.open("INITIAL.DAT", ios::in|ios::binary) ;
+	fstream temp ;
+	temp.open("temp.dat", ios::out|ios::binary) ;
+	file.seekg(0,ios::beg) ;
+	while ( !file.eof() )
+	{
+		file.read((char *) this, sizeof(initial)) ;
+		if ( file.eof() )
+			break ;
+		if ( accno != t_accno )
+			temp.write((char *) this, sizeof(initial)) ;
+	}
+	file.close() ;
+	temp.close() ;
+	file.open("INITIAL.DAT", ios::out|ios::binary) ;
+	temp.open("temp.dat", ios::in|ios::binary) ;
+	temp.seekg(0,ios::beg) ;
+	while ( !temp.eof() )
+	{
+		temp.read((char *) this, sizeof(initial)) ;
+		if ( temp.eof() )
+			break ;
+		file.write((char *) this, sizeof(initial)) ;
+	}
+	file.close() ;
+	temp.close() ;
+}
+
+
