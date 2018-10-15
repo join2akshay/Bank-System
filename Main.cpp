@@ -901,3 +901,49 @@ void initial :: delete_account(int t_accno)
 }
 
 
+//************************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION UPDATE BALANCE FOR THE GIVEN ACOUNT NO.
+// 		    IN THE FILE INITIAL.DAT
+//************************************************************************
+
+
+void initial :: update_balance(int t_accno, float t_balance)
+{
+	int recno ;
+	recno = recordno(t_accno) ;
+	fstream file ;
+	file.open("INITIAL.DAT", ios::out | ios::ate|ios::binary) ;
+	balance = t_balance ;
+	int location ;
+	location = (recno-1) * sizeof(initial) ;
+	file.seekp(location) ;
+	file.write((char *) this, sizeof(initial)) ;
+	file.close() ;
+}
+
+
+//**********************************************************************
+
+// CLASS INITIAL :: THIS FUNCTION MODIFIES THE RECORD FOR THE GIVEN DATA
+// 		    IN THE FILE INITIAL.DAT
+//**********************************************************************
+
+
+void initial :: modify_account(int t_accno, char t_name[30], char
+t_address[60])
+{
+	int recno ;
+	recno = recordno(t_accno) ;
+	fstream file ;
+	file.open("INITIAL.DAT", ios::out | ios::ate|ios::binary) ;
+	strcpy(name,t_name) ;
+	strcpy(address,t_address) ;
+	int location ;
+	location = (recno-1) * sizeof(initial) ;
+	file.seekp(location) ;
+	file.write((char *) this, sizeof(initial)) ;
+	file.close() ;
+}
+
+
