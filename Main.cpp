@@ -947,3 +947,145 @@ t_address[60])
 }
 
 
+//************************************************************************
+
+//CLASS INITIAL :: THIS FUNCTION GIVE THE DATA TO MODIFY THE RECORD IN THE
+//		   FILE INITIAL.DAT
+//************************************************************************
+
+
+void initial :: modify(void)
+{
+	clrscr() ;
+	char t_acc[10] ;
+	int t, t_accno ;
+	gotoxy(1,1) ;
+	cout <<"PRESS (0) TO EXIT" ;
+	gotoxy(5,5) ;
+	cout <<"Enter the account no. " ;
+	gets(t_acc) ;
+	t = atoi(t_acc) ;
+	t_accno = t ;
+	if (t_accno == 0)
+		return ;
+	clrscr() ;
+	if (!found_account(t_accno))
+	{
+		gotoxy(5,5) ;
+		cout <<"\7Account not found" ;
+		getch() ;
+		return ;
+	}
+	shape s ;
+	s.box(2,2,79,24,218) ;
+	s.line_hor(3,78,4,196) ;
+	s.line_hor(3,78,22,196) ;
+	gotoxy(1,1) ;
+	cout <<"PRESS (0) TO EXIT" ;
+	textbackground(WHITE) ;
+	gotoxy(3,3) ;
+	for (int i=1; i<=76; i++) cprintf(" ") ;
+	textbackground(BLACK) ;
+	textcolor(BLACK+BLINK) ; textbackground(WHITE) ;
+	gotoxy(30,3) ;
+	cprintf("MODIFY ACCOUNT SCREEN") ;
+	textcolor(LIGHTGRAY) ; textbackground(BLACK) ;
+	int d1, m1, y1 ;
+	struct date d;
+	getdate(&d);           		//Inbuilt function to display current
+	d1 = d.da_day ;			//date of the system
+	m1 = d.da_mon ;
+	y1 = d.da_year ;
+	gotoxy(62,5) ;
+	cout <<"Date: "<<d1
+<<"/" <<m1 <<"/" <<y1 ;
+	char ch ;
+	display(t_accno) ;
+	account a ;
+	do
+	{
+		a.clear(5,13) ;
+		gotoxy(5,13) ;
+		cout <<"Modify this account (y/n): " ;
+		ch = getche() ;
+		if (ch == '0')
+			return ;
+		ch = toupper(ch) ;
+	} while (ch != 'N' && ch != 'Y') ;
+	if (ch == 'N')
+		return ;
+	int modified=0, valid ;
+	char t_name[30], t_address[60] ;
+	gotoxy(5,15) ;
+	cout <<"Name    : " ;
+	gotoxy(5,16) ;
+	cout <<"Address : " ;
+	do
+	{
+		a.clear(15,15) ;
+		a.clear(5,23) ;
+		gotoxy(5,23) ;
+		cout <<"ENTER NAME or PRESS <ENTER> FOR NO CHANGE" ;
+		valid = 1 ;
+		gotoxy(15,15) ;
+		gets(t_name) ;
+		strupr(t_name) ;
+		if (t_name[0] == '0')
+			return ;
+		if (strlen(t_name) > 25)
+		{
+			valid = 0 ;
+			gotoxy(5,23) ;
+			cprintf("\7NAME SHOULD NOT BE GREATER THAN 25") ;
+			getch() ;
+		}
+	} while (!valid) ;
+	if (strlen(t_name) > 0)
+		modified = 1 ;
+	do
+	{
+		a.clear(15,16) ;
+		a.clear(5,23) ;
+		gotoxy(5,23) ;
+		cout <<"ENTER ADDRESS or PRESS <ENTER> FOR NO CHANGE" ;
+		valid = 1;
+		gotoxy(15,16) ;
+		gets(t_address) ;
+		strupr(t_address) ;
+		if (t_address[0] == '0')
+			return ;
+		if (strlen(t_address) > 55)
+		{
+			valid = 0 ;
+			gotoxy(5,23) ;
+			cprintf("\7SHOULD NOT BE BLANK OR GREATER THAN 55") ;
+			getch() ;
+		}
+	} while (!valid) ;
+	if (strlen(t_address) > 0)
+		modified = 1 ;
+	if (!modified)
+		return ;
+	a.clear(5,23) ;
+	do
+	{
+		a.clear(5,18) ;
+		gotoxy(5,18) ;
+		cout <<"Do you want to save changes (y/n): " ;
+		ch = getche() ;
+		if (ch == '0')
+			return ;
+		ch = toupper(ch) ;
+	} while (ch != 'N' && ch != 'Y') ;
+	if (ch == 'N')
+		return ;
+	modify_account(t_accno,t_name,t_address) ;
+	gotoxy(5,21) ;
+	cout <<"\7Record Modified" ;
+	gotoxy(5,23) ;
+	cout <<"press a key to continue..." ;
+	getch() ;
+}
+
+
+
